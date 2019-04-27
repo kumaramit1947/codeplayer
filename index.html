@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Code Player</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!--cdn link for jquery-->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+  <!--css codes goes here-->
+  <style>
+  body {
+  margin: 0px;
+  padding: 0px;
+  }
+  #header {
+    width: 100%;
+    max-height: 70px;
+    background: rgba(0,100,200,0.7);
+    margin-top: -2.1%;
+    padding-top: 0.5%;
+    border-bottom: 10px solid rgba(0,100,200,0.2);
+
+  }
+  .headtitle {
+    font-weight: 500;
+    font-size: 250%;
+    margin-left: 39%;
+    color: rgba(0,0,10,0.6);
+  }
+  .navigation {
+    width: 100%;
+    max-height: 30.43px;
+    background: rgba(0,100,200,0.77);
+
+  }
+  .btn {
+    display: inline-block;
+    margin-left: 1.3%;
+    font-size: 140%;
+    margin-bottom: 0.5%;
+    color: rgba(0,0,10,0.65);
+    text-align: center;
+    padding-left: 0.3%;
+    padding-right: 0.3%;
+    cursor: pointer;
+  }
+  .btn:hover,.clickbtn {
+    border-bottom: 4px solid rgba(0,100,200,0.5);
+    background: rgba(0,100,200,0.4);
+    border-top-right-radius: 20%;
+    border-top-left-radius: 20%;
+  }
+  .pane {
+    resize: none;
+    display: inline-block;
+    float: left;
+  }
+  .display {
+    display: none;
+  }
+  .googleicon {
+    height: 15px;
+    width: 15px;
+    margin-top: 1px;
+  }
+  .btn a {
+    color: rgba(0,0,10,0.65);
+  }
+
+  </style>
+
+</head>
+<body>
+  <div id="header">
+    <h1 class="headtitle">CODE PLAYER</h1>
+  </div>
+
+  <div class="navigation">
+    <div class="btn clickbtn htmlbtn">HTML</div>
+    <div class="btn clickbtn cssbtn">CSS</div>
+    <div class="btn clickbtn jsbtn">JAVASCRIPT</div>
+    <div class="btn clickbtn outbtn">OUTPUT</div>
+    <div class="btn newbtn">CLEAR</div>
+    <div class="btn searchbtn"><a href="https://www.google.com/search" target="_blank"><img class="googleicon" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSYrhU-KklAjRSRkNStgYCxTPzJHmEFVrLoV3kwR14E-kJwaxQmww" alt="google search icon"> SEARCH</a></div>
+  </div>
+
+  <div class="codearea">
+    <textarea class="pane htmltxt"><h1>This is Kumar Amit.</h1></textarea>
+    <textarea class="pane csstxt">h1{color: orange;}</textarea>
+    <textarea class="pane jstxt">document.getElementsByTagName('h1')[0].prepend("Hey! ");</textarea>
+    <iframe id="outframe" class="pane frame"></iframe>
+  </div>
+
+<!--javascript and jquery codes goes here-->
+  <script type="text/javascript" rel="javascript">
+  $(document).ready(function(){
+    $('.codearea').height($(window).height());
+    $('.pane').height(99+'%');
+    $('.pane').width($('.codearea').width()/(4-$('.display').length)-6);
+    var output=function(){
+      $(".frame").contents().find('html').html("<html><head><style>"+$('.csstxt').val()+"</style></head><body>"+$('.htmltxt').val()+"</body></html>");
+      document.getElementById('outframe').contentWindow.eval($('.jstxt').val()); //to execute any string written in javascript pane as the javascript code in iframe.
+    };
+
+    $('.htmlbtn').click(function(){
+      $(this).toggleClass('clickbtn');
+      $('.htmltxt').toggleClass('display');
+    });
+    $('.cssbtn').click(function(){
+      $(this).toggleClass('clickbtn');
+      $('.csstxt').toggleClass('display');
+
+    });
+    $('.jsbtn').click(function(){
+      $(this).toggleClass('clickbtn');
+      $('.jstxt').toggleClass('display');
+
+    });
+    $('.outbtn').click(function(){
+      $(this).toggleClass('clickbtn');
+      $('.frame').toggleClass('display');
+    });
+    $('.btn').click(function(){ //when any pane button is clicked, the width of the pane is adjusted according to the no. of pane.
+      $('.pane').width($('.codearea').width()/(4-$('.display').length)-6);
+    });
+    output();
+    $(".pane").on("change keyup paste",function(){ //this function is executed when any textarea element's value is changed.
+      output();
+    });
+    //action for the clear button, the html,css and javascript pane is emptied .
+    $('.newbtn').click(function(){
+      $('.pane').val('');
+    });
+  });
+
+  </script>
+  <!--********-->
+</body>
+</html>
